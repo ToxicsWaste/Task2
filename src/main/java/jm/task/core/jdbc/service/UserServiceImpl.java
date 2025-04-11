@@ -1,14 +1,17 @@
 package jm.task.core.jdbc.service;
 
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
+
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 
 public class UserServiceImpl implements UserService {
+    //private final UserDao userDao = new UserDaoJDBCImpl();
+    private final UserDao userDao = new UserDaoHibernateImpl();
 
-    private final UserDao userDao = new UserDaoJDBCImpl();
     public void createUsersTable() {
         userDao.createUsersTable();
         System.out.println("Таблица Users создана.");
@@ -16,20 +19,17 @@ public class UserServiceImpl implements UserService {
 
     public void dropUsersTable() {
         userDao.dropUsersTable();
-        System.out.println("Таблица Users уничтожена.");
-
+        System.out.println("Таблица Users удалена.");
     }
 
     public void saveUser(String name, String lastName, byte age) {
         userDao.saveUser(name, lastName, age);
-        System.out.printf("Пользователь %s %s %d был добавлен.\n", name, lastName, age);
-
+        System.out.println("Пользователь " + name + " " + lastName + " " + age + " был добавлен.");
     }
 
     public void removeUserById(long id) {
         userDao.removeUserById(id);
-        System.out.print("Пользователь id = " + id + " успешно удален.\n");
-
+        System.out.println("Пользователь id = " + id + " успешно удален.");
     }
 
     public List<User> getAllUsers() {
@@ -39,6 +39,5 @@ public class UserServiceImpl implements UserService {
     public void cleanUsersTable() {
         userDao.cleanUsersTable();
         System.out.println("Таблица Users очищена.");
-
     }
 }
